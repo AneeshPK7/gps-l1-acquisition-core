@@ -48,7 +48,8 @@ make syn         # Yosys synthesis for xc7 -> syn/utilization.txt
 ```
 
 Board build (Vivado 2022.x or newer, board files installed). Step-by-step guide for a
-Windows / Linux PC: [docs/RUN_ON_PC.md](docs/RUN_ON_PC.md).
+Windows / Linux PC: [docs/RUN_ON_PC.md](docs/RUN_ON_PC.md). To have Claude Code do the run, paste
+the prompt in [docs/VIVADO_RUN_PROMPT.md](docs/VIVADO_RUN_PROMPT.md).
 
 ```bash
 vivado -mode batch -source vivado/build.tcl                    # PYNQ-Z2

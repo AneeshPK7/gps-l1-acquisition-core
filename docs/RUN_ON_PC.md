@@ -75,7 +75,7 @@ The same self-checking testbench runs in xsim. Run these from the `hw` folder:
 cd hw
 xvlog -sv rtl/sdf_stage.sv rtl/fft_sdf.sv rtl/acq_core.sv rtl/gps_acq_axi.sv tb/tb_gps_acq.sv
 xelab tb_gps_acq -s tb_sim
-xsim tb_sim -R -testplusarg VEC=sim/vectors/directed -testplusarg CSV=sim/results_xsim.csv
+xsim tb_sim -R -testplusarg "VEC=sim/vectors/directed" -testplusarg "CSV=sim/results_xsim.csv"
 ```
 
 Expected ending: `bit-exact vs model : 8 / 8` and `TB_GPS_ACQ PASS`.
@@ -99,16 +99,16 @@ Expected UART output:
 
 ```
 GPS L1 acquisition core - PS/PL test
-T1 PRN  1: fd=  3000 Hz  tau= 512  P1/P2=50.27  det=1  cycles=15427  PASS
+T1 PRN  1: fd=  3000 Hz  tau= 512  P1/P2=50.27  det=1  cycles=15428  PASS
 ...
-T8 PRN  3: fd= -5000 Hz  tau= 997  P1/P2=1.37  det=0  cycles=15427  PASS
+T8 PRN  3: fd= -5000 Hz  tau= 997  P1/P2=1.37  det=0  cycles=15428  PASS
 HIL result: 8 / 8 PASS
 cold start: ...
 $PGACQ,...
 ```
 
 The `cycles` value read back from the board is the measured hardware search time
-(15 427 cycles = 0.154 ms at 100 MHz).
+(15 428 cycles = 0.154 ms at 100 MHz).
 
 ## Common problems
 

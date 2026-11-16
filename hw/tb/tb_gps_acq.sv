@@ -149,8 +149,10 @@ module tb_gps_acq;
             n_bit_ok  += bit_ok;
             n_true_ok += true_ok;
 
-            $display("case %2d PRN %2d: k=%+0d kHz tau=%4d (%6.1f chips) P1/P2=%6.2f det=%0d cycles=%0d | model %s | truth %s",
-                     t + 1, expv[t*NF + 0], $signed(dop), cp, cp * 1.023 / 1.024, ratio, det, cyc,
+            // plain %0d only: xsim does not support the '+' flag
+            $display("case %2d PRN %2d: k=%s%0d kHz tau=%4d (%6.1f chips) P1/P2=%6.2f det=%0d cycles=%0d | model %s | truth %s",
+                     t + 1, expv[t*NF + 0], ($signed(dop) > 0) ? "+" : "", $signed(dop), cp,
+                     cp * 1.023 / 1.024, ratio, det, cyc,
                      bit_ok ? "MATCH" : "MISMATCH", true_ok ? "PASS" : "FAIL");
             if (!bit_ok)
                 $display("        expected k=%0d tau=%0d P1=%0d P2=%0d det=%0d", $signed(expv[t*NF + 2]),

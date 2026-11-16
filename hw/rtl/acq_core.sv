@@ -44,7 +44,7 @@ module acq_core #(
     // ======================================================================
     // capture buffer: 1024 words x 12 bits (4 x 3-bit codes)
     // ======================================================================
-    logic [11:0] cap_mem [0:N-1];
+    (* ram_style = "block" *) logic [11:0] cap_mem [0:N-1];
     logic [9:0]  cap_wptr;
     logic [9:0]  cap_raddr;
     logic [11:0] cap_q;
@@ -64,7 +64,7 @@ module acq_core #(
     // ======================================================================
     // memories: spectrum RAM, code ROM, row buffer
     // ======================================================================
-    logic [31:0] spec_mem [0:N-1];
+    (* ram_style = "block" *) logic [31:0] spec_mem [0:N-1];
     logic [9:0]  spec_raddr, spec_waddr;
     logic [31:0] spec_q, spec_wdata;
     logic        spec_we;
@@ -73,13 +73,15 @@ module acq_core #(
         spec_q <= spec_mem[spec_raddr];
     end
 
-    logic [15:0] code_rom [0:32*N-1];
+    // 32 PRN x 1024 x (8+8) bit = 512 kb: force block RAM (Vivado otherwise built it
+    // from ~9 400 LUTs)
+    (* rom_style = "block" *) logic [15:0] code_rom [0:32*N-1];
     initial $readmemh(ROM_FILE, code_rom);
     logic [14:0] rom_addr;
     logic [15:0] rom_q;
     always_ff @(posedge clk) rom_q <= code_rom[rom_addr];
 
-    logic [31:0] row_mem [0:2*N-1];
+    (* ram_style = "block" *) logic [31:0] row_mem [0:2*N-1];
     logic [10:0] row_raddr, row_waddr;
     logic [31:0] row_q, row_wdata;
     logic        row_we;
@@ -213,43 +215,53 @@ module acq_core #(
     assign spec_raddr = m + 10'(kidx) - 10'd5;          // (m + k) mod N
     assign rom_addr   = {prn_m1, m};
 
-    logic bn_v1, bn_s1, bn_v2, bn_s2, bn_v3, bn_s3;
-    logic signed [25:0] pr, pi;
-    logic signed [15:0] bn_re, bn_im;
+    // pipeline: 1 RAM/ROM read | 2 complex multiply | 3 round + block-exponent shift
+    //           | 4 saturate + conjugate  (stages 3 and 4 split to meet 100 MHz)
+    logic bn_v1, bn_s1, bn_v2, bn_s2, bn_v3, bn_s3, bn_v4, bn_s4;
+    logic signed [25:0] pr, pi;          // stage 2: products
+    logic signed [25:0] pr_t, pi_t;      // stage 3: rounded and shifted
+    logic signed [15:0] bn_re, bn_im;    // stage 4: FFT input
 
     wire signed [15:0] xr = spec_q[31:16];
     wire signed [15:0] xi = spec_q[15:0];
     wire signed [7:0]  cr = rom_q[15:8];
     wire signed [7:0]  ci = rom_q[7:0];
 
-    function automatic logic signed [15:0] shr_sat(input logic signed [25:0] v,
-                                                   input logic [3:0] e);
-        logic signed [25:0] t;
-        t = (e == 0) ? v : ((v + (26'sd1 <<< (e - 1))) >>> e);
-        if (t > 26'sd32767)       shr_sat = 16'sh7fff;
-        else if (t < -26'sd32768) shr_sat = 16'sh8000;
-        else                      shr_sat = t[15:0];
+    // rounding constant 2^(e-1), registered once per search (exponent is static
+    // during the Doppler bins), so stage 3 is only an adder and a barrel shifter
+    logic signed [25:0] rnd_c;
+    always_ff @(posedge clk)
+        rnd_c <= (exponent == 0) ? 26'sd0 : (26'sd1 <<< (exponent - 1));
+
+    function automatic logic signed [15:0] sat16(input logic signed [25:0] t);
+        if (t > 26'sd32767)       sat16 = 16'sh7fff;
+        else if (t < -26'sd32768) sat16 = 16'sh8000;
+        else                      sat16 = t[15:0];
     endfunction
 
-    logic signed [15:0] pr_s, pi_s;
-    always_comb begin
-        pr_s = shr_sat(pr, exponent);
-        pi_s = shr_sat(pi, exponent);
-    end
+    // conj(sat16(t)) with saturation: sat16 = -32768 maps to +32767
+    function automatic logic signed [15:0] neg_sat16(input logic signed [25:0] t);
+        if (t <= -26'sd32768)     neg_sat16 = 16'sh7fff;
+        else if (t >= 26'sd32767) neg_sat16 = -16'sh7fff;
+        else                      neg_sat16 = 16'(-t);
+    endfunction
 
     always_ff @(posedge clk) begin
         if (rst) begin
-            {bn_v1, bn_s1, bn_v2, bn_s2, bn_v3, bn_s3} <= '0;
+            {bn_v1, bn_s1, bn_v2, bn_s2, bn_v3, bn_s3, bn_v4, bn_s4} <= '0;
         end else begin
             bn_v1 <= (state == S_BIN_FEED);
             bn_s1 <= (state == S_BIN_FEED) && (m == 0);
             {bn_v2, bn_s2} <= {bn_v1, bn_s1};
             {bn_v3, bn_s3} <= {bn_v2, bn_s2};
+            {bn_v4, bn_s4} <= {bn_v3, bn_s3};
         end
         pr    <= xr * cr - xi * ci;
         pi    <= xr * ci + xi * cr;
-        bn_re <= pr_s;
-        bn_im <= (pi_s == 16'sh8000) ? 16'sh7fff : -pi_s;   // conj (saturating)
+        pr_t  <= (pr + rnd_c) >>> exponent;
+        pi_t  <= (pi + rnd_c) >>> exponent;
+        bn_re <= sat16(pr_t);
+        bn_im <= neg_sat16(pi_t);
     end
 
     // FFT engine (shared by forward and inverse transforms)
@@ -258,8 +270,8 @@ module acq_core #(
     fft_sdf #(.TW_FILE(TW_FILE)) u_fft (
         .clk      (clk),
         .rst      (rst),
-        .in_valid (fe_v2 | bn_v3),
-        .in_sop   (fe_s2 | bn_s3),
+        .in_valid (fe_v2 | bn_v4),
+        .in_sop   (fe_s2 | bn_s4),
         .in_re    (fe_v2 ? fe_re : bn_re),
         .in_im    (fe_v2 ? fe_im : bn_im),
         .out_valid(fft_ov),

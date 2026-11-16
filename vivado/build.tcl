@@ -76,10 +76,13 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 \
     -config {Master "/ps7/M_AXI_GP0" Clk "Auto"} [get_bd_intf_pins dma/S_AXI_LITE]
 # DMA reads DDR through HP0
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 \
-    -config {Slave "/ps7/S_AXI_HP0" Clk "Auto"} [get_bd_intf_pins dma/M_AXI_MM2S]
+    -config {Master "/dma/M_AXI_MM2S" Clk "Auto"} [get_bd_intf_pins ps7/S_AXI_HP0]
 # sample stream
 connect_bd_intf_net [get_bd_intf_pins dma/M_AXIS_MM2S] [get_bd_intf_pins acq/s_axis]
-connect_bd_net [get_bd_pins ps7/FCLK_CLK0] [get_bd_pins dma/m_axi_mm2s_aclk]
+# Vivado 2024.2's HP0 automation already clocks the DMA master; connect only if not
+if {[llength [get_bd_nets -quiet -of_objects [get_bd_pins dma/m_axi_mm2s_aclk]]] == 0} {
+    connect_bd_net [get_bd_pins ps7/FCLK_CLK0] [get_bd_pins dma/m_axi_mm2s_aclk]
+}
 
 # interrupts
 set cc [create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat irq_concat]

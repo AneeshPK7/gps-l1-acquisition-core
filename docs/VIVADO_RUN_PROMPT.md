@@ -25,14 +25,19 @@ Step-by-step instructions are in docs/RUN_ON_PC.md in that repo; read it first a
 3. Simulation in Vivado's simulator (xsim), run from the hw/ folder:
      xvlog -sv rtl/sdf_stage.sv rtl/fft_sdf.sv rtl/acq_core.sv rtl/gps_acq_axi.sv tb/tb_gps_acq.sv
      xelab tb_gps_acq -s tb_sim
-     xsim tb_sim -R -testplusarg VEC=sim/vectors/directed
-     xsim tb_sim -R -testplusarg VEC=sim/vectors/regress -testplusarg TRUTH_STAT
+     xsim tb_sim -R -testplusarg "VEC=sim/vectors/directed"
+     xsim tb_sim -R -testplusarg "VEC=sim/vectors/regress" -testplusarg TRUTH_STAT
    Expected: "bit-exact vs model : 8 / 8" and "24 / 24", and "TB_GPS_ACQ PASS" for both runs.
 
-4. Bitstream build, run from the repository root (takes 15-30 minutes; run it in the
-   background and wait for it to finish):
+4. Bitstream build, run from the repository root (takes 15-30 minutes):
      vivado -mode batch -source vivado/build.tcl
    (add "-tclargs zedboard" at the end if only ZedBoard board files are installed)
+   Run it as a normal foreground command with a long timeout (at least 45 minutes).
+   Do NOT start Vivado as a detached background process: Vivado 2024.2 on Windows then
+   fails in create_bd_design ("Failed to load feature 'ipintegrator'").
+   If Vivado exits after the bitstream but before the reports are written, open
+   vivado/build/gps_acq.xpr in a new Vivado batch session and re-run the last block of
+   build.tcl (open_run impl_1, the three report_* commands, write_hw_platform).
 
 5. If the build fails:
    - Read vivado.log and find the first real error.

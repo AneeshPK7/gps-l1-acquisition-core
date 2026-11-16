@@ -113,7 +113,7 @@ from `sw/`. The core sits at `0x43C0_0000`.
 
 | Metric | Report estimate | Measured |
 |---|---|---|
-| Cycles / time per PRN | 26 200 / 0.26 ms | **15 427 / 0.154 ms** (RTL sim; inverse FFTs streamed back to back) |
+| Cycles / time per PRN | 26 200 / 0.26 ms | **15 428 / 0.154 ms** (RTL sim; inverse FFTs streamed back to back) |
 | All 32 PRNs | 8.4 ms | 4.9 ms |
 | DSP slices | ≈42 | 48 (40 FFT, 4 Doppler multiplier, 2 magnitude, 2 threshold compare) |
 | Block RAM | spectrum 32 kb, FIFOs 32 kb, ROM 512 kb | 3 RAMB36 + 43 RAMB18 (≈24.5 RAMB36, 18 % of xc7z020) |

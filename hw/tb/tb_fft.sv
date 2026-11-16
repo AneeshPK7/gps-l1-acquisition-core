@@ -56,7 +56,7 @@ module tb_fft;
             end
             if ({out_re, out_im} !== exp_w) begin
                 if (errors < 10)
-                    $display("ERROR frame %0d slot %0d: got %0d%+0dj expected %0d%+0dj", f, j,
+                    $display("ERROR frame %0d slot %0d: got %0d,%0dj expected %0d,%0dj", f, j,
                              out_re, out_im, $signed(exp_w[31:16]), $signed(exp_w[15:0]));
                 errors++;
             end

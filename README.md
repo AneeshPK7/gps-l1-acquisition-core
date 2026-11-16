@@ -47,7 +47,8 @@ make sim         # FFT unit test, T1–T8, interrupt mode, 24-case random regres
 make syn         # Yosys synthesis for xc7 -> syn/utilization.txt
 ```
 
-Board build (Vivado 2022.x or newer, board files installed):
+Board build (Vivado 2022.x or newer, board files installed). Step-by-step guide for a
+Windows / Linux PC: [docs/RUN_ON_PC.md](docs/RUN_ON_PC.md).
 
 ```bash
 vivado -mode batch -source vivado/build.tcl                    # PYNQ-Z2

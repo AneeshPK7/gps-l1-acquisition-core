@@ -111,17 +111,22 @@ from `sw/`. The core sits at `0x43C0_0000`.
 
 ### Timing and resources
 
-| Metric | Report estimate | Measured |
+Vivado 2024.2, xc7z020clg400-1, 100 MHz `FCLK_CLK0` (full results in
+[docs/vivado_results/](docs/vivado_results/)):
+
+| Metric | Report estimate | Measured (acquisition core only) |
 |---|---|---|
 | Cycles / time per PRN | 26 200 / 0.26 ms | **15 428 / 0.154 ms** (RTL sim; inverse FFTs streamed back to back) |
 | All 32 PRNs | 8.4 ms | 4.9 ms |
-| DSP slices | ≈42 | 48 (40 FFT, 4 Doppler multiplier, 2 magnitude, 2 threshold compare) |
-| Block RAM | spectrum 32 kb, FIFOs 32 kb, ROM 512 kb | 3 RAMB36 + 43 RAMB18 (≈24.5 RAMB36, 18 % of xc7z020) |
-| LUTs / FFs | – | ≈3 250 (6 %) / 3 314 (3 %) |
-| Max clock | 100 MHz target | not yet measured: needs Vivado (`vivado/build.tcl`) |
+| Timing at 100 MHz | – | **met**, WNS +0.200 ns (≈102 MHz max); worst path: code ROM BRAM → DSP |
+| DSP slices | ≈42 | 48 (21.8 %): 40 FFT, 4 Doppler multiplier, 2 magnitude, 2 threshold compare |
+| Block RAM | spectrum 32 kb, FIFOs 32 kb, ROM 512 kb | 21 tiles (15.0 %): 18 RAMB36 + 6 RAMB18 |
+| LUTs | – | 4 135 (7.8 %), of which 900 LUTRAM/SRL |
+| Flip-flops | – | 1 359 (1.3 %) |
 
-The LUT, FF, DSP and BRAM figures are a **Yosys** `synth_xilinx` estimate. Vivado's
-numbers will differ somewhat.
+Whole design including PS glue, AXI DMA and interconnect: 5 305 LUTs (10.0 %), 3 030 FFs,
+22 BRAM tiles, 48 DSPs. The same xsim testbench passes bit-exact in Vivado (8/8 directed,
+24/24 regression).
 
 Differences from the report's architecture: the FFT uses its complex multiplier for the
 sum path too (W = 1), so all paths share one rounding. This costs a few DSPs, and the
@@ -129,8 +134,8 @@ last stage could drop its multiplier. The THRESH register is defined as Q8.8.
 
 ## Not yet done
 
-* Vivado implementation, timing closure and the on-board hardware-in-the-loop run.
-  `vivado/build.tcl` and `sw/` are written but have not been run here (no Vivado or
-  board available).
+* The on-board hardware-in-the-loop run (`sw/`). The Vivado build above was made without
+  board files, so its bitstream will not boot on a board: rebuild with the PYNQ-Z2 or
+  ZedBoard board files installed first (see [docs/RUN_ON_PC.md](docs/RUN_ON_PC.md)).
 * Tracking loops, non-coherent integration, a 2048-point FFT and radix-2² stages
   (report: future work).

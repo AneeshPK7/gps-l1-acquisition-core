@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="acq-flow" name="Acquisition flowchart">
+    <mxGraphModel dx="1000" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="760" pageHeight="1060" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="grpPre" value="Pre-processing (once per 1 ms block)" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#9673a6;fontColor=#5b3f75;fontFamily=Helvetica;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="20" y="110" width="280" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="grpLoop" value="Doppler search loop (k = −5 … +5 kHz, 11 bins)" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#6c8ebf;fontColor=#2f4f7f;fontFamily=Helvetica;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="110" width="320" height="530" as="geometry" />
+        </mxCell>
+
+        <mxCell id="start" value="&lt;b&gt;1 ms IF signal in&lt;/b&gt;&lt;br&gt;4096 samples @ 4.096 MHz" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="240" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="mix" value="&lt;b&gt;Mix to baseband&lt;/b&gt;&lt;br&gt;Multiply by (1, 0, −1, 0)" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dec" value="&lt;b&gt;Decimate by 4&lt;/b&gt;&lt;br&gt;1024 complex samples" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="250" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fft" value="&lt;b&gt;1024-point FFT&lt;/b&gt;&lt;br&gt;Store spectrum in RAM" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="350" width="240" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pick" value="&lt;b&gt;Select Doppler bin k&lt;/b&gt;&lt;br&gt;1 kHz steps" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="150" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="shift" value="&lt;b&gt;Circular shift by k bins&lt;/b&gt;&lt;br&gt;Read RAM with address offset" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="250" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mult" value="&lt;b&gt;Complex multiply&lt;/b&gt;&lt;br&gt;× conj(FFT(PRN)) from ROM" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="350" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ifft" value="&lt;b&gt;IFFT and magnitude&lt;/b&gt;&lt;br&gt;|R(τ)|² for 1024 code phases" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="450" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="peak" value="&lt;b&gt;Update peak tracker&lt;/b&gt;&lt;br&gt;Keep max and 2nd-max peak" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="550" width="240" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="done" value="All 11 bins&lt;br&gt;done?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="670" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ratio" value="Peak / 2nd peak&lt;br&gt;&amp;gt; threshold?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="810" width="200" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="miss" value="&lt;b&gt;Not detected&lt;/b&gt;&lt;br&gt;Try next PRN" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="837" width="240" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="hit" value="&lt;b&gt;Satellite acquired&lt;/b&gt;&lt;br&gt;Output Doppler bin and code phase" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="960" width="240" height="56" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="start" target="mix">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="mix" target="dec">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="dec" target="fft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="fft" target="pick">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="380" />
+              <mxPoint x="330" y="180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="pick" target="shift">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="shift" target="mult">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="mult" target="ifft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="ifft" target="peak">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;" edge="1" parent="1" source="peak" target="done">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="No (k = k + 1)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;exitX=1;exitY=0.5;entryX=1;entryY=0.5;fontFamily=Helvetica;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="done" target="pick">
+          <mxGeometry x="-0.85" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="720" />
+              <mxPoint x="710" y="180" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;fontFamily=Helvetica;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="done" target="ratio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;fontFamily=Helvetica;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="ratio" target="hit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#333333;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontFamily=Helvetica;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="ratio" target="miss">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

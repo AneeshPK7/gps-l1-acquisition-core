@@ -1,0 +1,20 @@
+.DS_Store
+__pycache__/
+*.pyc
+
+# simulation / synthesis / Vivado outputs
+hw/sim/build/
+hw/sim/log_*.txt
+hw/syn/yosys.log
+vivado/build/
+vivado/reports/
+vivado/*.xsa
+*.jou
+*.vvp
+
+# earlier report drafts (final report is in docs/)
+/GPS_L1_Acquisition_Report.pdf
+/GPS_L1_Acquisition_Report_Overleaf/
+/GPS_L1_Acquisition_Report_Overleaf.zip
+/report/
+/report_full_v1/

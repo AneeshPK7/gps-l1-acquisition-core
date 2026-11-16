@@ -1,0 +1,6 @@
+# Yosys synthesis of the acquisition core for Xilinx 7-series (Zynq-7020 fabric).
+# Gives a resource estimate only; timing closure needs Vivado (see vivado/build.tcl).
+# Run from hw/:  yosys syn/synth_xc7.ys
+read_verilog -sv rtl/sdf_stage.sv rtl/fft_sdf.sv rtl/acq_core.sv rtl/gps_acq_axi.sv
+synth_xilinx -top gps_acq_axi -family xc7 -flatten
+tee -o syn/utilization.txt stat

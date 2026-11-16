@@ -1,0 +1,34 @@
+
+6. Printing statistics.
+
+=== gps_acq_axi ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     9390 wires
+    23434 wire bits
+      218 public wires
+     4570 public wire bits
+       24 ports
+      136 port bits
+     7308 cells
+       12   $scopeinfo
+        1   BUFG
+      544   CARRY4
+       48   DSP48E1
+     2981   FDRE
+      333   FDSE
+       93   IBUF
+       83   INV
+     1619   LUT2
+      823   LUT3
+       92   LUT4
+      228   LUT5
+      319   LUT6
+        1   MUXF7
+       43   OBUF
+       30   RAM32M
+       12   RAM64M
+       43   RAMB18E1
+        3   RAMB36E1
+

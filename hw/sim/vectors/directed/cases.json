@@ -1,0 +1,154 @@
+[
+  {
+    "label": "T1 Strong signal (60 dB-Hz)",
+    "prn": 1,
+    "fd": 3000,
+    "cp": 512.0,
+    "cn0": 60,
+    "present": true,
+    "model": {
+      "k": 3,
+      "doppler_hz": 3000.0,
+      "tau": 512,
+      "code_phase_chips": 511.5,
+      "peak": 158015041,
+      "second": 3143122,
+      "ratio": 50.27327637934512,
+      "detected": true,
+      "exponent": 5
+    }
+  },
+  {
+    "label": "T2 Negative Doppler",
+    "prn": 5,
+    "fd": -4000,
+    "cp": 87.3,
+    "cn0": 52,
+    "present": true,
+    "model": {
+      "k": -4,
+      "doppler_hz": -4000.0,
+      "tau": 87,
+      "code_phase_chips": 86.9150390625,
+      "peak": 81883269,
+      "second": 8906125,
+      "ratio": 9.194039944420272,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "T3 Zero Doppler",
+    "prn": 12,
+    "fd": 0,
+    "cp": 1000.5,
+    "cn0": 52,
+    "present": true,
+    "model": {
+      "k": 0,
+      "doppler_hz": 0.0,
+      "tau": 1001,
+      "code_phase_chips": 1000.0224609375,
+      "peak": 109228450,
+      "second": 10747105,
+      "ratio": 10.163523106920422,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "T4 Upper band edge",
+    "prn": 20,
+    "fd": 5000,
+    "cp": 201.7,
+    "cn0": 52,
+    "present": true,
+    "model": {
+      "k": 5,
+      "doppler_hz": 5000.0,
+      "tau": 202,
+      "code_phase_chips": 201.802734375,
+      "peak": 45354193,
+      "second": 9902633,
+      "ratio": 4.580013517616981,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "T5 Lower band edge",
+    "prn": 31,
+    "fd": -5000,
+    "cp": 15.0,
+    "cn0": 52,
+    "present": true,
+    "model": {
+      "k": -5,
+      "doppler_hz": -5000.0,
+      "tau": 15,
+      "code_phase_chips": 14.9853515625,
+      "peak": 91690625,
+      "second": 7427677,
+      "ratio": 12.344455069869085,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "T6 Doppler between bins",
+    "prn": 9,
+    "fd": -2400,
+    "cp": 640.2,
+    "cn0": 52,
+    "present": true,
+    "model": {
+      "k": -2,
+      "doppler_hz": -2000.0,
+      "tau": 640,
+      "code_phase_chips": 639.375,
+      "peak": 6191705,
+      "second": 3051769,
+      "ratio": 2.028890456649897,
+      "detected": true,
+      "exponent": 5
+    }
+  },
+  {
+    "label": "T7 UAV motion (+260 Hz)",
+    "prn": 17,
+    "fd": 1260,
+    "cp": 333.3,
+    "cn0": 50,
+    "present": true,
+    "model": {
+      "k": 1,
+      "doppler_hz": 1000.0,
+      "tau": 333,
+      "code_phase_chips": 332.6748046875,
+      "peak": 53458481,
+      "second": 8227136,
+      "ratio": 6.497823908587387,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "T8 Noise only",
+    "prn": 3,
+    "fd": 0,
+    "cp": 0.0,
+    "cn0": 52,
+    "present": false,
+    "model": {
+      "k": -5,
+      "doppler_hz": -5000.0,
+      "tau": 997,
+      "code_phase_chips": 996.0263671875,
+      "peak": 9253633,
+      "second": 6741524,
+      "ratio": 1.3726322119449548,
+      "detected": false,
+      "exponent": 4
+    }
+  }
+]

@@ -1,0 +1,458 @@
+[
+  {
+    "label": "R1",
+    "prn": 31,
+    "fd": 3972.1380096957546,
+    "cp": 793.526461120833,
+    "cn0": 48.702486279887104,
+    "present": true,
+    "model": {
+      "k": 4,
+      "doppler_hz": 4000.0,
+      "tau": 794,
+      "code_phase_chips": 793.224609375,
+      "peak": 37517800,
+      "second": 7208500,
+      "ratio": 5.204661163903725,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R2",
+    "prn": 21,
+    "fd": -4793.28488210647,
+    "cp": 861.8491242254614,
+    "cn0": 50.08424019959823,
+    "present": true,
+    "model": {
+      "k": -5,
+      "doppler_hz": -5000.0,
+      "tau": 862,
+      "code_phase_chips": 861.158203125,
+      "peak": 14423229,
+      "second": 2380032,
+      "ratio": 6.060098771781219,
+      "detected": true,
+      "exponent": 5
+    }
+  },
+  {
+    "label": "R3",
+    "prn": 17,
+    "fd": -4733.044645329101,
+    "cp": 410.22287996122685,
+    "cn0": 51.046043148193064,
+    "present": true,
+    "model": {
+      "k": -5,
+      "doppler_hz": -5000.0,
+      "tau": 410,
+      "code_phase_chips": 409.599609375,
+      "peak": 67176180,
+      "second": 11261825,
+      "ratio": 5.96494617879429,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R4",
+    "prn": 3,
+    "fd": -2162.820090549582,
+    "cp": 80.44062743427907,
+    "cn0": 49.03646507002005,
+    "present": true,
+    "model": {
+      "k": -2,
+      "doppler_hz": -2000.0,
+      "tau": 80,
+      "code_phase_chips": 79.921875,
+      "peak": 55165493,
+      "second": 10124645,
+      "ratio": 5.448634791639608,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R5",
+    "prn": 11,
+    "fd": -2042.8404982158754,
+    "cp": 948.8418260233359,
+    "cn0": 54.281198051556146,
+    "present": true,
+    "model": {
+      "k": -2,
+      "doppler_hz": -2000.0,
+      "tau": 949,
+      "code_phase_chips": 948.0732421875,
+      "peak": 84354970,
+      "second": 11338304,
+      "ratio": 7.439822569583599,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R6",
+    "prn": 11,
+    "fd": 603.9639557958021,
+    "cp": 165.72746374858988,
+    "cn0": 51.55714959140353,
+    "present": true,
+    "model": {
+      "k": 1,
+      "doppler_hz": 1000.0,
+      "tau": 165,
+      "code_phase_chips": 164.8388671875,
+      "peak": 66960865,
+      "second": 14000450,
+      "ratio": 4.782765196832959,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R7",
+    "prn": 8,
+    "fd": -2831.0395726303927,
+    "cp": 1006.5117206856818,
+    "cn0": 56.163494493310985,
+    "present": true,
+    "model": {
+      "k": -3,
+      "doppler_hz": -3000.0,
+      "tau": 1007,
+      "code_phase_chips": 1006.0166015625,
+      "peak": 61717561,
+      "second": 2766769,
+      "ratio": 22.30672708852817,
+      "detected": true,
+      "exponent": 5
+    }
+  },
+  {
+    "label": "R8",
+    "prn": 21,
+    "fd": 2794.175868612314,
+    "cp": 741.5261199648606,
+    "cn0": 56.10357340931603,
+    "present": true,
+    "model": {
+      "k": 3,
+      "doppler_hz": 3000.0,
+      "tau": 742,
+      "code_phase_chips": 741.275390625,
+      "peak": 324871282,
+      "second": 14930290,
+      "ratio": 21.75920775818822,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R9",
+    "prn": 18,
+    "fd": 1119.0455062293215,
+    "cp": 722.306014273361,
+    "cn0": 57.43618552522774,
+    "present": true,
+    "model": {
+      "k": 1,
+      "doppler_hz": 1000.0,
+      "tau": 723,
+      "code_phase_chips": 722.2939453125,
+      "peak": 35682505,
+      "second": 3143673,
+      "ratio": 11.350577811369059,
+      "detected": true,
+      "exponent": 5
+    }
+  },
+  {
+    "label": "R10",
+    "prn": 31,
+    "fd": -164.58702570489203,
+    "cp": 550.7249649052674,
+    "cn0": 52.99272342505539,
+    "present": true,
+    "model": {
+      "k": 0,
+      "doppler_hz": 0.0,
+      "tau": 551,
+      "code_phase_chips": 550.4619140625,
+      "peak": 65645549,
+      "second": 9569933,
+      "ratio": 6.859562026191824,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R11",
+    "prn": 6,
+    "fd": -4991.917257024692,
+    "cp": 316.2408613803719,
+    "cn0": 54.7324065676351,
+    "present": true,
+    "model": {
+      "k": -5,
+      "doppler_hz": -5000.0,
+      "tau": 316,
+      "code_phase_chips": 315.69140625,
+      "peak": 117913853,
+      "second": 8476442,
+      "ratio": 13.910772114054458,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R12",
+    "prn": 18,
+    "fd": 4015.487183297989,
+    "cp": 673.1705620638579,
+    "cn0": 54.91957863835381,
+    "present": true,
+    "model": {
+      "k": 4,
+      "doppler_hz": 4000.0,
+      "tau": 673,
+      "code_phase_chips": 672.3427734375,
+      "peak": 88208906,
+      "second": 9583424,
+      "ratio": 9.204320501732992,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R13",
+    "prn": 27,
+    "fd": -1355.048005737476,
+    "cp": 388.6439251900925,
+    "cn0": 50.31570489205209,
+    "present": true,
+    "model": {
+      "k": -1,
+      "doppler_hz": -1000.0,
+      "tau": 389,
+      "code_phase_chips": 388.6201171875,
+      "peak": 46474577,
+      "second": 8744717,
+      "ratio": 5.314589025579673,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R14",
+    "prn": 2,
+    "fd": -4504.623794343751,
+    "cp": 880.1411651977055,
+    "cn0": 55.14863914301172,
+    "present": true,
+    "model": {
+      "k": -4,
+      "doppler_hz": -4000.0,
+      "tau": 881,
+      "code_phase_chips": 880.1396484375,
+      "peak": 88357546,
+      "second": 12350189,
+      "ratio": 7.15434767840395,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R15",
+    "prn": 27,
+    "fd": -4679.823695860205,
+    "cp": 777.3983750664942,
+    "cn0": 52.947756501249856,
+    "present": true,
+    "model": {
+      "k": -5,
+      "doppler_hz": -5000.0,
+      "tau": 778,
+      "code_phase_chips": 777.240234375,
+      "peak": 45379154,
+      "second": 11681440,
+      "ratio": 3.8847226026928188,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R16",
+    "prn": 32,
+    "fd": -2263.3649861221484,
+    "cp": 910.3329310353846,
+    "cn0": 53.85693036442593,
+    "present": true,
+    "model": {
+      "k": -2,
+      "doppler_hz": -2000.0,
+      "tau": 911,
+      "code_phase_chips": 910.1103515625,
+      "peak": 131865197,
+      "second": 17235017,
+      "ratio": 7.651004753868244,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R17",
+    "prn": 3,
+    "fd": -949.6446411341631,
+    "cp": 960.7002986195538,
+    "cn0": 55.31441680621426,
+    "present": true,
+    "model": {
+      "k": -1,
+      "doppler_hz": -1000.0,
+      "tau": 961,
+      "code_phase_chips": 960.0615234375,
+      "peak": 141812981,
+      "second": 8827274,
+      "ratio": 16.065319939088784,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R18",
+    "prn": 29,
+    "fd": 4972.431600511085,
+    "cp": 77.64885752200438,
+    "cn0": 53.132070859351536,
+    "present": true,
+    "model": {
+      "k": 5,
+      "doppler_hz": 5000.0,
+      "tau": 77,
+      "code_phase_chips": 76.9248046875,
+      "peak": 121884985,
+      "second": 13212085,
+      "ratio": 9.225264975210196,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R19",
+    "prn": 25,
+    "fd": 2210.404045498274,
+    "cp": 90.89720612948484,
+    "cn0": 46.934895129089064,
+    "present": true,
+    "model": {
+      "k": 3,
+      "doppler_hz": 3000.0,
+      "tau": 90,
+      "code_phase_chips": 89.912109375,
+      "peak": 11386813,
+      "second": 7514657,
+      "ratio": 1.5152804712177814,
+      "detected": false,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R20",
+    "prn": 30,
+    "fd": -560.3506941776582,
+    "cp": 220.6765554826761,
+    "cn0": 52.21798828830118,
+    "present": true,
+    "model": {
+      "k": -1,
+      "doppler_hz": -1000.0,
+      "tau": 220,
+      "code_phase_chips": 219.78515625,
+      "peak": 30593098,
+      "second": 7627264,
+      "ratio": 4.0110186300093975,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R21",
+    "prn": 27,
+    "fd": 3455.530448053148,
+    "cp": 344.2354931473441,
+    "cn0": 51.945536355306345,
+    "present": true,
+    "model": {
+      "k": 3,
+      "doppler_hz": 3000.0,
+      "tau": 344,
+      "code_phase_chips": 343.6640625,
+      "peak": 67412530,
+      "second": 8576269,
+      "ratio": 7.860356292462375,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R22",
+    "prn": 13,
+    "fd": -484.3475423448551,
+    "cp": 154.45568495213288,
+    "cn0": 54.06139796279574,
+    "present": true,
+    "model": {
+      "k": 0,
+      "doppler_hz": 0.0,
+      "tau": 154,
+      "code_phase_chips": 153.849609375,
+      "peak": 53871557,
+      "second": 8675028,
+      "ratio": 6.209957708493851,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R23",
+    "prn": 15,
+    "fd": 4617.038513898048,
+    "cp": 782.2364763099197,
+    "cn0": 51.8716453772045,
+    "present": true,
+    "model": {
+      "k": 5,
+      "doppler_hz": 5000.0,
+      "tau": 783,
+      "code_phase_chips": 782.2353515625,
+      "peak": 52292673,
+      "second": 8746756,
+      "ratio": 5.978521980034655,
+      "detected": true,
+      "exponent": 4
+    }
+  },
+  {
+    "label": "R24",
+    "prn": 3,
+    "fd": 3954.8531520564147,
+    "cp": 1013.7341310100799,
+    "cn0": 56.90599916158296,
+    "present": true,
+    "model": {
+      "k": 4,
+      "doppler_hz": 4000.0,
+      "tau": 1014,
+      "code_phase_chips": 1013.009765625,
+      "peak": 258659165,
+      "second": 15422690,
+      "ratio": 16.77133917623968,
+      "detected": true,
+      "exponent": 4
+    }
+  }
+]

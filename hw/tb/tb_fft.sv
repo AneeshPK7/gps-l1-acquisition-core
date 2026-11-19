@@ -5,24 +5,34 @@
 // sample bit-exactly with the bit-true Python model (sim/vectors/fft/out.hex).
 // -----------------------------------------------------------------------------
 `timescale 1ns / 1ps
+// Build with -DFFT_DW=32 for the 32-bit comparison FFT (vectors in sim/vectors/fft32).
+`ifdef FFT_DW
+`define FFT_VEC "sim/vectors/fft32"
+`define FFT_TW  "mem/twiddle32.hex"
+`else
+`define FFT_DW  16
+`define FFT_VEC "sim/vectors/fft"
+`define FFT_TW  "mem/twiddle.hex"
+`endif
 module tb_fft;
     localparam int N = 1024, NF = 4;
+    localparam int DW = `FFT_DW;
 
     logic clk = 0, rst = 1;
     always #5 clk = ~clk;                    // 100 MHz
 
     logic in_valid = 0, in_sop = 0;
-    logic signed [15:0] in_re = 0, in_im = 0;
+    logic signed [DW-1:0] in_re = 0, in_im = 0;
     logic out_valid, out_sop;
-    logic signed [15:0] out_re, out_im;
+    logic signed [DW-1:0] out_re, out_im;
 
-    fft_sdf dut (.*);
+    fft_sdf #(.DW(DW), .TW_FILE(`FFT_TW)) dut (.*);
 
-    logic [31:0] vin  [0:NF*N-1];
-    logic [31:0] vout [0:NF*N-1];
+    logic [2*DW-1:0] vin  [0:NF*N-1];
+    logic [2*DW-1:0] vout [0:NF*N-1];
     initial begin
-        $readmemh("sim/vectors/fft/in.hex", vin);
-        $readmemh("sim/vectors/fft/out.hex", vout);
+        $readmemh({`FFT_VEC, "/in.hex"}, vin);
+        $readmemh({`FFT_VEC, "/out.hex"}, vout);
     end
 
     // expected output order: frames 0..3, then frame 0 again
@@ -34,8 +44,8 @@ module tb_fft;
         for (int i = 0; i < N; i++) begin
             in_valid <= 1;
             in_sop   <= (i == 0);
-            in_re    <= vin[f*N + i][31:16];
-            in_im    <= vin[f*N + i][15:0];
+            in_re    <= vin[f*N + i][2*DW-1:DW];
+            in_im    <= vin[f*N + i][DW-1:0];
             @(posedge clk);
         end
         in_valid <= 0;
@@ -43,7 +53,7 @@ module tb_fft;
     endtask
 
     int f, j;
-    logic [31:0] exp_w;
+    logic [2*DW-1:0] exp_w;
     always @(posedge clk) begin
         if (out_valid) begin
             f = frame_seq[nout / N];
@@ -57,7 +67,7 @@ module tb_fft;
             if ({out_re, out_im} !== exp_w) begin
                 if (errors < 10)
                     $display("ERROR frame %0d slot %0d: got %0d,%0dj expected %0d,%0dj", f, j,
-                             out_re, out_im, $signed(exp_w[31:16]), $signed(exp_w[15:0]));
+                             out_re, out_im, $signed(exp_w[2*DW-1:DW]), $signed(exp_w[DW-1:0]));
                 errors++;
             end
             nout++;

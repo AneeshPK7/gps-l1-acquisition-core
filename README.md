@@ -132,6 +132,23 @@ Differences from the report's architecture: the FFT uses its complex multiplier 
 sum path too (W = 1), so all paths share one rounding. This costs a few DSPs, and the
 last stage could drop its multiplier. The THRESH register is defined as Q8.8.
 
+### 16-bit vs 32-bit baseband (report §6.3)
+
+`model/width_compare.py` runs the bit-true acquisition with a 16-bit baseband (this
+design) and a 32-bit one (32-bit data, Q2.30 twiddles, 16+16-bit ROM) on the same 3 000
+signals and 1 000 noise-only trials. The FFT RTL takes a `DW` parameter (default 16);
+`make sim_fft32` checks the 32-bit FFT bit-exact, and `make syn_width` synthesizes both.
+
+| | 16-bit | 32-bit |
+|---|---|---|
+| FFT / correlation SQNR vs float | 46.8 / 40.5 dB | 143.1 / 90.1 dB |
+| C/N0 for Pd 50 % / 90 % | 46.4 / 49.9 dB-Hz | 46.4 / 49.9 dB-Hz |
+| False alarms | 1.7 % | 1.7 % |
+| FFT engine DSP / LUT (Yosys) | 40 / 2 394 | 160 / 7 084 |
+| Whole core DSP / BRAM tiles | 48 / 21 (Vivado) | ≈180 / ≈52 (estimate) |
+
+Same detection performance at about four times the DSP cost, so the core stays 16-bit.
+
 ## Not yet done
 
 * The on-board hardware-in-the-loop run (`sw/`). The Vivado build above was made without

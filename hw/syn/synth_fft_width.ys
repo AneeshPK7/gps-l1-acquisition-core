@@ -1,0 +1,11 @@
+# FFT engine alone at 16-bit and 32-bit word length (16 vs 32-bit baseband comparison).
+# Run from hw/:  yosys -q syn/synth_fft_width.ys   ->  syn/fft16_util.txt, syn/fft32_util.txt
+read_verilog -sv rtl/sdf_stage.sv rtl/fft_sdf.sv
+chparam -set DW 16 -set TW_FILE "mem/twiddle.hex" fft_sdf
+synth_xilinx -top fft_sdf -family xc7 -flatten
+tee -o syn/fft16_util.txt stat
+design -reset
+read_verilog -sv rtl/sdf_stage.sv rtl/fft_sdf.sv
+chparam -set DW 32 -set TW_FILE "mem/twiddle32.hex" fft_sdf
+synth_xilinx -top fft_sdf -family xc7 -flatten
+tee -o syn/fft32_util.txt stat

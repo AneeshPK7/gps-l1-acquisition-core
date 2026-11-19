@@ -2,6 +2,8 @@
 #   make vectors   regenerate ROM images + test vectors from the Python model
 #   make sim       FFT unit test + directed system test (T1-T8) + IRQ test + regression
 #   make syn       Yosys synthesis for Xilinx 7-series (resource estimate)
+#   make sim_fft32 32-bit FFT unit test (16 vs 32-bit baseband comparison)
+#   make syn_width Yosys synthesis of the FFT engine at 16 and 32 bits
 #   make clean
 # Run from this directory (hw/).  Needs: python3 + numpy, iverilog >= 12, yosys.
 
@@ -10,7 +12,7 @@ RTL    := rtl/sdf_stage.sv rtl/fft_sdf.sv rtl/acq_core.sv rtl/gps_acq_axi.sv
 BUILD  := sim/build
 NREG   ?= 24
 
-.PHONY: all vectors sim sim_fft sim_directed sim_irq sim_regress syn clean
+.PHONY: all vectors sim sim_fft sim_fft32 sim_directed sim_irq sim_regress syn syn_width clean
 
 all: sim
 
@@ -29,6 +31,13 @@ $(BUILD)/tb_gps_acq.vvp: $(RTL) tb/tb_gps_acq.sv | $(BUILD)
 sim_fft: $(BUILD)/tb_fft.vvp
 	vvp -n $< | tee sim/log_fft.txt | grep -E "PASS|FAIL|latency"
 
+$(BUILD)/tb_fft32.vvp: rtl/sdf_stage.sv rtl/fft_sdf.sv tb/tb_fft.sv | $(BUILD)
+	iverilog -g2012 -DFFT_DW=32 -o $@ $^
+
+sim_fft32: $(BUILD)/tb_fft32.vvp
+	$(PY) ../model/width_compare.py --vectors
+	vvp -n $< | tee sim/log_fft32.txt | grep -E "PASS|FAIL|latency"
+
 sim_directed: $(BUILD)/tb_gps_acq.vvp
 	vvp -n $< +VEC=sim/vectors/directed +CSV=sim/results_directed.csv | grep -v WARNING | tee sim/log_directed.txt
 
@@ -43,6 +52,10 @@ sim: sim_fft sim_directed sim_irq sim_regress
 syn:
 	yosys -q -l syn/yosys.log syn/synth_xc7.ys
 	@grep -A60 "=== gps_acq_axi ===" syn/yosys.log | grep -E "Number of cells|LUT|FD|DSP48|RAMB|SRL|CARRY|MUX" || true
+
+syn_width:
+	yosys -q -l syn/yosys_fft_width.log syn/synth_fft_width.ys
+	grep -E "DSP48|RAMB|FD|LUT" syn/fft16_util.txt syn/fft32_util.txt
 
 clean:
 	rm -rf $(BUILD) sim/log_*.txt sim/results_*.csv syn/yosys.log syn/*.json

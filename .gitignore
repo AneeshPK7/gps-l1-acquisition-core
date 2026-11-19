@@ -18,3 +18,8 @@ vivado/*.xsa
 /GPS_L1_Acquisition_Report_Overleaf.zip
 /report/
 /report_full_v1/
+
+# Office lock files, Vivado FFT-width build output
+~$*
+hw/syn/yosys_fft_width.log
+vivado/fft_width/

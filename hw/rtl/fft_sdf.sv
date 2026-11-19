@@ -10,23 +10,24 @@
 // -----------------------------------------------------------------------------
 module fft_sdf #(
     parameter int LOG2N   = 10,
-    parameter     TW_FILE = "mem/twiddle.hex"
+    parameter     TW_FILE = "mem/twiddle.hex",
+    parameter int DW      = 16              // 16 = this design; 32 = wide comparison build
 ) (
     input  logic               clk,
     input  logic               rst,
     input  logic               in_valid,
     input  logic               in_sop,
-    input  logic signed [15:0] in_re,
-    input  logic signed [15:0] in_im,
+    input  logic signed [DW-1:0] in_re,
+    input  logic signed [DW-1:0] in_im,
     output logic               out_valid,
     output logic               out_sop,
-    output logic signed [15:0] out_re,
-    output logic signed [15:0] out_im
+    output logic signed [DW-1:0] out_re,
+    output logic signed [DW-1:0] out_im
 );
     logic               v  [0:LOG2N];
     logic               s  [0:LOG2N];
-    logic signed [15:0] re [0:LOG2N];
-    logic signed [15:0] im [0:LOG2N];
+    logic signed [DW-1:0] re [0:LOG2N];
+    logic signed [DW-1:0] im [0:LOG2N];
 
     assign v[0]  = in_valid;
     assign s[0]  = in_sop;
@@ -40,7 +41,8 @@ module fft_sdf #(
                 .LOG2N  (LOG2N),
                 .STAGE  (g),
                 .SCALE  ((g % 2) == 0),
-                .TW_FILE(TW_FILE)
+                .TW_FILE(TW_FILE),
+                .DW     (DW)
             ) u_stage (
                 .clk      (clk),
                 .rst      (rst),

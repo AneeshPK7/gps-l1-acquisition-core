@@ -1,0 +1,31 @@
+
+10. Printing statistics.
+
+=== $paramod$c2d30f244e0eb4965add110c9d010e4003344738\fft_sdf ===
+
+        +----------Local Count, excluding submodules.
+        | 
+    24194 wires
+    43884 wire bits
+      150 public wires
+     5687 public wire bits
+       10 ports
+      134 port bits
+    12672 cells
+       10   $scopeinfo
+        1   BUFG
+     1438   CARRY4
+      160   DSP48E1
+     3413   FDRE
+      620   FDSE
+       68   IBUF
+       30   INV
+     5315   LUT2
+     1321   LUT3
+       20   LUT5
+      120   LUT6
+       66   OBUF
+       55   RAM32M
+       22   RAM64M
+       13   RAMB36E1
+

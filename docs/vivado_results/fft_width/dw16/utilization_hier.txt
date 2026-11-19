@@ -1,0 +1,40 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
+| Date         : Fri Nov 20 00:15:36 2026
+| Host         : (host removed) running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file C:/work/gps/vivado/fft_width/dw16/utilization_hier.txt
+| Design       : fft_sdf
+| Device       : xc7z020clg400-1
+| Speed File   : -1
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++----------------------+---------------------------+------------+------------+---------+------+-----+--------+--------+------------+
+|       Instance       |           Module          | Total LUTs | Logic LUTs | LUTRAMs | SRLs | FFs | RAMB36 | RAMB18 | DSP Blocks |
++----------------------+---------------------------+------------+------------+---------+------+-----+--------+--------+------------+
+| fft_sdf              |                     (top) |       2641 |       2447 |      96 |   98 | 957 |      0 |      5 |         40 |
+|   (fft_sdf)          |                     (top) |         18 |          2 |       0 |   16 | 261 |      0 |      0 |          0 |
+|   g_stage[0].u_stage |                 sdf_stage |        633 |        599 |       0 |   34 |  62 |      0 |      1 |          4 |
+|   g_stage[1].u_stage | sdf_stage__parameterized0 |        350 |        332 |       0 |   18 |  61 |      0 |      1 |          4 |
+|   g_stage[2].u_stage | sdf_stage__parameterized1 |        307 |        297 |       0 |   10 |  60 |      0 |      1 |          4 |
+|   g_stage[3].u_stage | sdf_stage__parameterized2 |        245 |        239 |       0 |    6 |  59 |      0 |      1 |          4 |
+|   g_stage[4].u_stage | sdf_stage__parameterized3 |        180 |        176 |       0 |    4 |  58 |      0 |      1 |          4 |
+|   g_stage[5].u_stage | sdf_stage__parameterized4 |        229 |        203 |      24 |    2 |  91 |      0 |      0 |          4 |
+|   g_stage[6].u_stage | sdf_stage__parameterized5 |        208 |        182 |      24 |    2 |  85 |      0 |      0 |          4 |
+|   g_stage[7].u_stage | sdf_stage__parameterized6 |        198 |        172 |      24 |    2 |  77 |      0 |      0 |          4 |
+|   g_stage[8].u_stage | sdf_stage__parameterized7 |        193 |        167 |      24 |    2 |  72 |      0 |      0 |          4 |
+|   g_stage[9].u_stage | sdf_stage__parameterized8 |         95 |         93 |       0 |    2 |  71 |      0 |      0 |          4 |
++----------------------+---------------------------+------------+------------+---------+------+-----+--------+--------+------------+
+* Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
+
+

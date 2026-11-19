@@ -144,10 +144,13 @@ signals and 1 000 noise-only trials. The FFT RTL takes a `DW` parameter (default
 | FFT / correlation SQNR vs float | 46.8 / 40.5 dB | 143.1 / 90.1 dB |
 | C/N0 for Pd 50 % / 90 % | 46.4 / 49.9 dB-Hz | 46.4 / 49.9 dB-Hz |
 | False alarms | 1.7 % | 1.7 % |
-| FFT engine DSP / LUT (Yosys) | 40 / 2 394 | 160 / 7 084 |
-| Whole core DSP / BRAM tiles | 48 / 21 (Vivado) | ≈180 / ≈52 (estimate) |
+| FFT engine DSP / LUT (Vivado, OOC) | 40 / 2 641 | 160 / 8 108 |
+| FFT engine at 100 MHz | met, WNS +2.20 ns (≈128 MHz) | **missed**, WNS −1.14 ns (≈90 MHz) |
+| Whole core DSP / BRAM tiles | 48 / 21 (Vivado) | ≈180 / ≈45 (estimate) |
 
-Same detection performance at about four times the DSP cost, so the core stays 16-bit.
+Same detection performance at four times the DSP cost, and the 32-bit FFT misses 100 MHz,
+so the core stays 16-bit. Vivado 2024.2 results for both FFT widths (`vivado/fft_width.tcl`,
+xsim bit-exact for both) are in [docs/vivado_results/fft_width/](docs/vivado_results/fft_width/).
 
 ## Not yet done
 

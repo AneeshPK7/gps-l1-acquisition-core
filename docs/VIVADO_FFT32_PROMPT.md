@@ -31,7 +31,8 @@ https://github.com/AneeshPK7/gps-l1-acquisition-core
      xelab tb_fft -s fft16
      xsim fft16 -R
    32-bit FFT (the comparison build; FFT_DW selects the 32-bit vectors and twiddles):
-     xvlog -sv -d FFT_DW=32 rtl/sdf_stage.sv rtl/fft_sdf.sv tb/tb_fft.sv
+     xvlog -sv -d "FFT_DW=32" rtl/sdf_stage.sv rtl/fft_sdf.sv tb/tb_fft.sv
+   (keep the quotes: Windows cmd otherwise splits the define at "=")
      xelab tb_fft -s fft32
      xsim fft32 -R
    Expected for both: "FFT latency: 1053 cycles" and "TB_FFT PASS: 5120 samples bit-exact".

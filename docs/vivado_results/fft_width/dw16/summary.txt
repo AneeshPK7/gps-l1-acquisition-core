@@ -1,0 +1,2 @@
+DW=16 part=xc7z020clg400-1 clock=10.000ns WNS=2.198
+Fmax_est_MHz=128.2
